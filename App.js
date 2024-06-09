@@ -5,7 +5,7 @@ import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createDrawerNavigator, DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer';
 import { gestureHandlerRootHOC } from 'react-native-gesture-handler';
-
+//Landing Page
 function HomeScreen({ navigation }) {
     return (
         <View style={styles.body}>
@@ -46,103 +46,103 @@ function HomeScreen({ navigation }) {
         </View>
     );
 }
-
+//TR Questions
 const TRQuestions = () => (
     <View style={styles.centeredView}>
-        
+        <Text>TR Questions Page</Text>
     </View>
 );
-
+//HR Questions
 const HRQuestions = () => (
     <View style={styles.centeredView}>
         <Text>HR Questions Page</Text>
     </View>
 );
-
+//MCQ Practice Questions
 const MCQPracticeQuestions = () => (
     <View style={styles.centeredView}>
         <Text>MCQ Practice Questions Page</Text>
     </View>
 );
-
+//Mock Interviews
 const MockInterviews = () => (
     <View style={styles.centeredView}>
         <Text>Mock Interviews Page</Text>
     </View>
 );
-
+//Workshop Area
 const WorkshopAreas = () => (
     <View style={styles.centeredView}>
         <Text>Workshop Areas Page</Text>
     </View>
 );
-
+//Notification page from Header
 const Notifications = () => (
     <View style={styles.centeredView}>
         <Text>Notifications Page</Text>
     </View>
 );
-
+//FAQ page from in footer
 const FAQ = () => (
     <View style={styles.centeredView}>
         <Text>FAQ Page</Text>
     </View>
 );
-
+//Blogs page from in footer
 const Blogs = () => (
     <View style={styles.centeredView}>
         <Text>Blogs Page</Text>
     </View>
 );
-
+//Placements page from in footer
 const Placements = () => (
     <View style={styles.centeredView}>
         <Text>Placements Page</Text>
     </View>
 );
-
+//Contact Us page from in footer
 const ContactUs = () => (
     <View style={styles.centeredView}>
         <Text>Contact Us Page</Text>
     </View>
 );
-
+//About Us page from in footer
 const AboutUs = () => (
     <View style={styles.centeredView}>
         <Text>About Us Page</Text>
     </View>
 );
-
+//College to Corporate in menu
 const CollegeToCorporate = () => (
     <View style={styles.centeredView}>
         <Text>College to Corporate Page</Text>
     </View>
 );
-
+//Workshop in menu
 const Workshop = () => (
     <View style={styles.centeredView}>
         <Text>Workshop Page</Text>
     </View>
 );
-
+//Mentoring in menu
 const Mentoring = () => (
     <View style={styles.centeredView}>
         <Text>Mentoring Page</Text>
     </View>
 );
-
+//Profile in menu
 const Profile = () => (
     <View style={styles.centeredView}>
         <Text>Profile Page</Text>
     </View>
 );
-
+//Logout in menu
 const Logout = () => (
     <View style={styles.centeredView}>
         <Text>Logout Page</Text>
     </View>
 );
-
+//Header part
 const Header = () => {
     const navigation = useNavigation();
 
@@ -162,7 +162,7 @@ const Header = () => {
         </View>
     );
 };
-
+//Footer part
 const Footer = () => {
     const navigation = useNavigation();
 
@@ -191,7 +191,7 @@ const Footer = () => {
         </View>
     );
 };
-//Keerthana
+//Keerthana part for drawer menu
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
 
@@ -256,7 +256,7 @@ const CustomDrawerContent = (props) => (
         />
     </DrawerContentScrollView>
 );
-
+//All navigating pages
 function MainStack() {
     return (
         <Stack.Navigator>
@@ -280,7 +280,7 @@ function MainStack() {
         </Stack.Navigator>
     );
 }
-
+//Navigating drawer
 const DrawerNavigator = () => (
     <Drawer.Navigator
         drawerContent={(props) => <CustomDrawerContent {...props} />}
@@ -291,7 +291,7 @@ const DrawerNavigator = () => (
         <Drawer.Screen name="MainStack" component={MainStack} />
     </Drawer.Navigator>
 );
-
+//Page arranging
 export default function App() {
     return (
         <NavigationContainer>
@@ -304,7 +304,7 @@ export default function App() {
 }
 
 
-
+//Styling
 const styles = StyleSheet.create({
     container: {
         flex: 1,
