@@ -1,0 +1,104 @@
+import React, { useState } from 'react';
+import { SafeAreaView, StyleSheet, Text, View, ScrollView, Image } from 'react-native';
+import FAQItem from './components/FAQItem'; // Assuming the FAQItem component file path
+
+/**
+ * FAQ Screen Component
+ * Renders the Frequently Asked Questions screen.
+ * @returns {JSX.Element} FAQ Screen component
+ */
+const FAQScreen = () => {
+  // State to manage the index of the expanded FAQ item
+  const [expandedIndex, setExpandedIndex] = useState(null);
+
+  return (
+    <SafeAreaView style={styles.container}>
+      {/* Header */}
+      <View style={styles.header}>
+        <Text style={styles.headerText}>Header</Text>
+      </View>
+
+      {/* Scrollable content */}
+      <ScrollView contentContainerStyle={styles.scrollViewContent}>
+        {/* Frequently Asked Questions section */}
+        <Text style={styles.faqText}>Frequently Asked Questions</Text>
+        <View style={styles.imageContainer}>
+          <Image
+            source={require('./assets/underline.png')} // Assuming 'underline.png' is the image asset
+            style={styles.underlineImage}
+          />
+        </View>
+
+        {/* FAQ items */}
+        <FAQItem
+          question="Curriculum Overview"
+          answer="We provide a full 360 degree course where the curriculum being split into Basic(Theory + Competitive Coding), Cognitive and Advanced Technical to help you crack any MNC with ease."
+          index={0}
+          expandedIndex={expandedIndex}
+          setExpandedIndex={setExpandedIndex}
+        />
+        {/* Add more FAQ items as needed */}
+      </ScrollView>
+
+      {/* Footer */}
+      <View style={styles.footer}>
+        <Text style={styles.footerText}>Footer</Text>
+      </View>
+    </SafeAreaView>
+  );
+};
+
+// Styles
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+  },
+  header: {
+    height: 90,
+    backgroundColor: '#f8f8f8',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderBottomWidth: 1,
+    borderBottomColor: '#e8e8e8',
+  },
+  headerText: {
+    fontSize: 20,
+    fontWeight: 'bold',
+  },
+  scrollViewContent: {
+    flexGrow: 1,
+    paddingHorizontal: 10,
+    paddingVertical: 20,
+    alignItems: 'center', // Align horizontally center
+  },
+  faqText: {
+    fontSize: 22,
+    fontWeight: 'bold',
+    color: '#000000',
+  },
+  imageContainer: {
+    alignItems: 'center',
+    marginTop: 10,
+    marginBottom: 25,
+  },
+  underlineImage: {
+    width: 300, // Adjust width as needed
+    height: 20, // Adjust height as needed
+    resizeMode: 'contain',
+  },
+  footer: {
+    height: 70,
+    backgroundColor: '#f8f8f8',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderTopWidth: 1,
+    borderTopColor: '#e8e8e8',
+  },
+  footerText: {
+    fontSize: 20,
+    fontWeight: 'bold',
+  },
+});
+
+export default FAQScreen;

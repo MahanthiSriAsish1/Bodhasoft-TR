@@ -1,0 +1,46 @@
+project-root/
+│
+├── src/
+│   ├── components/
+│   │   ├── AboutCard.js
+│   │   ├── ChooseCard.js
+│   │   ├── BlogCard.js
+│   │   ├── FAQItem.js
+│   │   ├── Hoverable.js
+│   │   ├── ProfileCard.js
+│   │   ├── TechnologyContainer.js
+│   │   └── ...
+│   │
+│   ├── 
+│   │
+│   └── screens/
+│       ├── MockInterview.js
+│       ├── AboutScreen.js
+│       ├── ContactScreen.js
+│       ├── BlogScreen.js
+│       ├── Placements.js
+│       ├── FAQ.js
+│       ├── FAQScreen.js
+│       ├── AboutScreen.js
+│       ├── ...
+│       └── ....
+│
+├── assets/
+│   ├── about1.png
+│   ├── about2.png
+│   ├── underline.png
+│   ├── company logos....
+│   └── ...
+├── duplicate file/
+│   ├── ALL COMPONENTS CODE FILE
+│   ├── ALL SCREENS CODE FILE
+│   
+│   
+│   
+│
+├── node_modules/
+│   ├── ...
+│
+├── package.json
+├── package-lock.json
+└── README.md

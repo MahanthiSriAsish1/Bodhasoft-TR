@@ -1,0 +1,237 @@
+import React from 'react';
+import { SafeAreaView, StyleSheet, Text, View, ScrollView, Image } from 'react-native';
+import ProfileCard from './components/ProfileCard';
+
+/**
+ * Placements Screen Component
+ * Renders the Placements screen.
+ * @returns {JSX.Element} Placements Screen component
+ */
+const PlacementScreen = () => {
+  // Data for profiles
+  const profiles = [
+    {
+      name: 'John Doe',
+      role: 'Java Developer',
+      imageSource: require('./assets/james.png'),
+      companyLogo: require('./assets/sunmicro.png'),
+      paragraph: 'He left Sun Microsystems on April 2, 2010, after it was acquired by the Oracle Corporation, citing reductions in pay, status, and decision-making ability, along with change of role and ethical challenges.',
+    }, 
+    // Add more profiles as needed
+  ];
+
+  // Data for images
+  const images = [
+    require('./assets/p1.png'),
+    require('./assets/p2.png'),
+    require('./assets/p3.png'),
+    require('./assets/p4.png'),
+    require('./assets/p5.png'),
+    require('./assets/p6.png'),
+    require('./assets/p7.png'),
+    require('./assets/p8.png'),
+    require('./assets/p9.png'),
+    require('./assets/p10.png'),
+    require('./assets/p11.png'),
+    require('./assets/p12.png'),
+  ];
+
+  return (
+    <SafeAreaView style={styles.container}>
+      {/* Header */}
+      <View style={styles.header}>
+        <Text style={styles.headerText}>Header</Text>
+      </View>
+
+      {/* Scrollable content */}
+      <ScrollView contentContainerStyle={styles.scrollViewContent}>
+        {/* Placement heading */}
+        <Text style={styles.placement}>PLACEMENTS</Text>
+
+        {/* Our Alumnus Are Placed In section */}
+        <Text style={styles.h1}>Our Alumnus Are Placed In</Text>
+        <Image
+          source={require('./assets/underline.png')}
+          style={styles.underlineimage}
+        />
+        <Text style={styles.paragraph}>
+          The Value we add at BodhaSoft outweighs the investment you make here.
+          We aspire to impart Industry knowledge at affordable charges and will make sure that 
+          you achieve your dream job.
+        </Text>
+
+        {/* Grid of company logos */}
+        <View style={styles.grid}>
+          {images.map((image, index) => (
+            <View key={index} style={styles.box}>
+              <Image 
+                source={image}
+                style={styles.image}
+                resizeMode="contain"
+              />
+            </View>
+          ))}
+        </View>
+
+        {/* Get In Touch Card */}
+        <View style={styles.card}>
+          <Text style={styles.cardTitle}>Get In Touch</Text>
+          <Text style={styles.cardText}>Info@bodhasoft.com</Text>
+        </View>
+
+        {/* What Our Students Have To Say heading */}
+        <Text style={styles.h1}>What Our Students Have To Say</Text>
+        <Image
+          source={require('./assets/underlinedown.png')}
+          style={styles.underlineimagedown}
+        />
+        <Text style={styles.paragraph2}>
+          Bodha Softers have bagged attractive packages,
+          at entry-level as well as experienced hires with
+          the Industry Giants. On cracking multiple competitive tests,
+          Bodha Soft Alumni have proudly secured an average package
+          of 6 Lakhs per annum as of 2022. The two-sided efforts,
+          at the most affordable prices, have resulted in dream offers,
+          which we are excited to offer every techy aspirant who opts for BodhaSoft.
+        </Text>
+
+        {/* Horizontal scroll of profile cards */}
+        <ScrollView horizontal>
+          {profiles.map((profile, index) => (
+            <ProfileCard key={index} {...profile} />
+          ))}
+        </ScrollView>
+      </ScrollView>
+
+      {/* Footer */}
+      <View style={styles.footer}>
+        <Text style={styles.footerText}>Footer</Text>
+      </View>
+    </SafeAreaView>
+  );
+};
+
+// Styles
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+  },
+  header: {
+    height: 90,
+    backgroundColor: '#f8f8f8',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderBottomWidth: 1,
+    borderBottomColor: '#e8e8e8',
+  },
+  headerText: {
+    fontSize: 20,
+    fontWeight: 'bold',
+  },
+  scrollViewContent: {
+    flexGrow: 1,
+    paddingHorizontal: 10,
+    paddingVertical: 20,
+  },
+  placement: {
+    fontSize: 20,
+    color: '#706976',
+    marginBottom: 20,
+    textAlign: 'center',
+  },
+  h1: {
+    fontSize: 22,
+    fontWeight: 'bold',
+    color: '#000000',
+    marginBottom: 15,
+    textAlign: 'center',
+  },
+  underlineimage: {
+    alignSelf: 'center',
+    width: 150,
+    marginTop: -20,      
+    resizeMode: 'contain',
+  },
+  underlineimagedown: {
+    alignSelf: 'center',
+    width: 250,
+    marginTop: -50,      
+    resizeMode: 'contain',
+  },
+  paragraph: {
+    color: '#706976',
+    fontSize: 16,
+    textAlign: 'center',
+    padding: 10,
+    marginBottom: 20,
+    textAlign: 'justify',
+  },
+  paragraph2: {
+    color: '#706976',
+    fontSize: 16,
+    textAlign: 'center',
+    padding: 10,
+    marginTop: -35,
+    marginBottom: 20,
+    textAlign: 'justify',
+  },
+  grid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+  },
+  box: {
+    width: 100,
+    height: 100,
+    borderWidth: 1,
+    borderColor: '#000000',
+    justifyContent: 'center',
+    alignItems: 'center',
+    margin: 0,
+  },
+  image: {
+    width: '90%',
+    height: '100%',
+  },
+  card: {
+    backgroundColor: '#6E37F9',
+    height: 150,
+    width: '95%',
+    alignSelf: 'center',
+    borderRadius: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 25,
+    marginBottom: 25,
+    shadowColor: '#6E37F9',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.3,
+    shadowRadius: 5,
+    elevation: 5,
+  },
+  cardTitle: {
+    fontSize: 20,
+    color: '#FFFFFF',
+    fontWeight: 'bold',
+    marginBottom: 10,
+  },
+  cardText: {
+    fontSize: 16,
+    color: '#FFFFFF',
+  },
+  footer: {
+    height: 70,
+    backgroundColor: '#f8f8f8',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderTopWidth: 1,
+    borderTopColor: '#e8e8e8',
+  },
+  footerText: {
+    fontSize: 20,
+    fontWeight: 'bold',
+  },
+});
+
+export default PlacementScreen;

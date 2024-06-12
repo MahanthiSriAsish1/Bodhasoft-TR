@@ -1,0 +1,50 @@
+import React from 'react';
+import { View, ScrollView, StyleSheet, Dimensions, Text } from 'react-native';
+
+/**
+ * MockInterview Component
+ * Renders the mock interview page.
+ * @returns {JSX.Element} MockInterview component
+ */
+const MockInterview = () => {
+  return (
+    <View style={styles.container}>
+      {/* Header */}
+      <View style={styles.header}></View>
+
+      {/* Body */}
+      <ScrollView contentContainerStyle={styles.bodyContainer}>
+        <Text>Mock Interview Page</Text>
+      </ScrollView>
+
+      {/* Footer */}
+      <View style={styles.footer}></View>
+    </View>
+  );
+};
+
+// Get window height for dynamic sizing
+const { height } = Dimensions.get('window');
+
+// Styles
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  header: {
+    height: 90,
+    backgroundColor: 'transparent', // You can change this to any color you want
+  },
+  bodyContainer: {
+    flexGrow: 1,
+    minHeight: height - 140, // Subtracting header and footer height
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  footer: {
+    height: 70,
+    backgroundColor: '', // You can change this to any color you want
+  },
+});
+
+export default MockInterview;
