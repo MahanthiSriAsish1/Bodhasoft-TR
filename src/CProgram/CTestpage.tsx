@@ -1,6 +1,7 @@
 import * as React from 'react';
-import { useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { useState, useEffect } from 'react';
+import { View, Text, TouchableOpacity, StyleSheet, ActivityIndicator } from 'react-native';
+import { ScrollView } from 'react-native-gesture-handler';
 
 type Question = {
   question: string;
@@ -9,62 +10,87 @@ type Question = {
   explanation: string;
 };
 
-// List of questions for the quiz
-const questions: Question[] = [
-  {
-    question: 'What is the capital of France?',
-    options: ['Paris', 'London', 'Rome', 'Berlin'],
-    correct: 'Paris',
-    explanation: 'Paris is the capital and most populous city of France.',
-  },
-  {
-    question: 'Who wrote "Hamlet"?',
-    options: ['Charles Dickens', 'William Shakespeare', 'Mark Twain', 'Jane Austen'],
-    correct: 'William Shakespeare',
-    explanation: 'William Shakespeare wrote the play "Hamlet" in the early 17th century.',
-  },
-  {
-    question: 'What is the smallest prime number?',
-    options: ['0', '1', '2', '3'],
-    correct: '2',
-    explanation: 'The smallest prime number is 2, as it is only divisible by 1 and itself.',
-  },
-  // Add more questions as needed
-];
-
 const CTestpage: React.FC<{ navigation: any }> = ({ navigation }) => {
-  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0); // State to track the current question index
-  const [selectedOption, setSelectedOption] = useState<string | null>(null); // State to track the selected option
-  const [isSubmitted, setIsSubmitted] = useState(false); // State to track if the current answer is submitted
+  const [questions, setQuestions] = useState<Question[]>(
+    [
+      {
+        "question": "What is the purpose of the `malloc()` function in C?",
+        "options": ["Allocate memory dynamically", "Free allocated memory", "Perform mathematical calculations", "None of the above"],
+        "correct": "Allocate memory dynamically",
+        "explanation": "`malloc()` function is used to allocate memory dynamically in C."
+      },
+      {
+        "question": "What does the `sizeof` operator return in C?",
+        "options": ["Memory address of a variable", "Size of a variable in bytes", "Type of a variable", "Value of a variable"],
+        "correct": "Size of a variable in bytes",
+        "explanation": "The `sizeof` operator in C returns the size of a variable or data type in bytes."
+      }
+      
+    ]
+  );
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  const [selectedOption, setSelectedOption] = useState<string | null>(null);
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
-  const currentQuestion = questions[currentQuestionIndex]; // Get the current question based on the index
+  useEffect(() => {
+    fetchQuestions();
+  }, []);
 
-  // Function to handle the submission of the answer
+  const fetchQuestions = async () => {
+    try {
+      const response = await fetch('https://api.example.com/quiz-questions'); // Replace with your API endpoint
+      const data = await response.json();
+      setQuestions(data);
+    } catch (error) {
+      console.error('Error fetching questions:', error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   const handleSubmit = () => {
     setIsSubmitted(true);
   };
 
-  // Function to handle navigation to the next question
   const handleNext = () => {
-    setIsSubmitted(false); // Reset submission state
-    setSelectedOption(null); // Reset selected option
+    setIsSubmitted(false);
+    setSelectedOption(null);
     if (currentQuestionIndex + 1 < questions.length) {
-      setCurrentQuestionIndex(currentQuestionIndex + 1); // Move to the next question if available
+      setCurrentQuestionIndex(currentQuestionIndex + 1);
     } else {
-      navigation.navigate('Home'); // Navigate back to Home after finishing the quiz
+      navigation.navigate('Home');
     }
   };
 
-  // Function to handle navigation to the previous question
   const handlePrevious = () => {
     if (currentQuestionIndex > 0) {
-      setIsSubmitted(false); // Reset submission state
-      setSelectedOption(null); // Reset selected option
-      setCurrentQuestionIndex(currentQuestionIndex - 1); // Move to the previous question if available
+      setIsSubmitted(false);
+      setSelectedOption(null);
+      setCurrentQuestionIndex(currentQuestionIndex - 1);
     }
   };
 
+  if (isLoading) {
+    return (
+      <View style={styles.container}>
+        <ActivityIndicator size="large" color="purple" />
+      </View>
+    );
+  }
+
+  if (questions.length === 0) {
+    return (
+      <View style={styles.container}>
+        <Text style={styles.errorText}>No questions available.</Text>
+      </View>
+    );
+  }
+
+  const currentQuestion = questions[currentQuestionIndex];
+
   return (
+    <ScrollView>
     <View style={styles.container}>
       <Text style={styles.question}>{currentQuestion.question}</Text>
       {currentQuestion.options.map((option) => (
@@ -72,13 +98,12 @@ const CTestpage: React.FC<{ navigation: any }> = ({ navigation }) => {
           key={option}
           style={[
             styles.optionButton,
-            // Apply styles based on the answer state (correct, incorrect, selected)
             isSubmitted && option === currentQuestion.correct ? styles.correctOption : null,
             isSubmitted && option === selectedOption && option !== currentQuestion.correct ? styles.incorrectOption : null,
             !isSubmitted && selectedOption === option ? styles.selectedOption : null,
           ]}
-          onPress={() => setSelectedOption(option)} // Set the selected option
-          disabled={isSubmitted} // Disable option selection after submission
+          onPress={() => setSelectedOption(option)}
+          disabled={isSubmitted}
         >
           <Text style={styles.optionText}>{option}</Text>
         </TouchableOpacity>
@@ -86,8 +111,8 @@ const CTestpage: React.FC<{ navigation: any }> = ({ navigation }) => {
       <View style={styles.buttonContainer}>
         <TouchableOpacity
           style={[styles.submitButton, !selectedOption || isSubmitted ? styles.disabledButton : null]}
-          onPress={handleSubmit} // Handle answer submission
-          disabled={!selectedOption || isSubmitted} // Disable submit button if no option is selected or already submitted
+          onPress={handleSubmit}
+          disabled={!selectedOption || isSubmitted}
         >
           <Text style={styles.navigationButtonText}>Submit</Text>
         </TouchableOpacity>
@@ -95,28 +120,27 @@ const CTestpage: React.FC<{ navigation: any }> = ({ navigation }) => {
       {isSubmitted && (
         <View style={styles.explanationContainer}>
           {selectedOption === currentQuestion.correct ? (
-            <Text style={styles.correctText}>Correct!</Text> // Show correct message
+            <Text style={styles.correctText}>Correct!</Text>
           ) : (
-            <Text style={styles.incorrectText}>Incorrect. The correct answer is {currentQuestion.correct}.</Text> // Show incorrect message
+            <Text style={styles.incorrectText}>Incorrect. The correct answer is {currentQuestion.correct}.</Text>
           )}
-           {/* // Show explanation for the answer */}
-          <Text style={styles.explanationText}>{currentQuestion.explanation}</Text> 
+          <Text style={styles.explanationText}>{currentQuestion.explanation}</Text>
           <View style={styles.navigationButtonsContainer}>
             <TouchableOpacity
               style={[styles.navigationButton, currentQuestionIndex === 0 ? styles.disabledButton : null]}
-              onPress={handlePrevious} // Handle navigation to the previous question
-              disabled={currentQuestionIndex === 0} // Disable previous button on the first question
+              onPress={handlePrevious}
+              disabled={currentQuestionIndex === 0}
             >
               <Text style={styles.navigationButtonText}>Previous</Text>
             </TouchableOpacity>
-            {/* // Handle navigation to the next question */}
-            <TouchableOpacity style={styles.navigationButton} onPress={handleNext}> 
+            <TouchableOpacity style={styles.navigationButton} onPress={handleNext}>
               <Text style={styles.navigationButtonText}>Next</Text>
             </TouchableOpacity>
           </View>
         </View>
       )}
     </View>
+    </ScrollView>
   );
 };
 
@@ -146,14 +170,14 @@ const styles = StyleSheet.create({
     backgroundColor: '#c2f9ff',
   },
   correctOption: {
-    backgroundColor: '#d4edda', // Light green color for correct answer
-    borderColor:'green',
-    borderWidth:1
+    backgroundColor: '#d4edda',
+    borderColor: 'green',
+    borderWidth: 1,
   },
   incorrectOption: {
-    backgroundColor: '#f8d7da', // Light red color for incorrect answer
-    borderColor:'red',
-    borderWidth:1
+    backgroundColor: '#f8d7da',
+    borderColor: 'red',
+    borderWidth: 1,
   },
   optionText: {
     fontSize: 18,
@@ -192,24 +216,26 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 5,
     marginHorizontal: 10,
-    width:"48%",
-    // flexDirection:'row',
-    // justifyContent:'space-around'
+    width: '48%',
   },
   submitButton: {
     backgroundColor: 'purple',
     padding: 10,
     borderRadius: 5,
     marginHorizontal: 10,
-    width:"100%"
-
+    width: '100%',
   },
   navigationButtonText: {
     color: 'white',
     fontSize: 16,
-    textAlign:"center"
+    textAlign: 'center',
   },
   disabledButton: {
     backgroundColor: '#cccccc',
+  },
+  errorText: {
+    fontSize: 18,
+    color: 'red',
+    textAlign: 'center',
   },
 });
